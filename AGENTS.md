@@ -4,6 +4,31 @@
 - Local `main` ref may not exist; use `dev` or `origin/dev` for diffs.
 - Prefer automation: execute requested actions without confirmation unless blocked by missing info or safety/irreversibility.
 
+## Build Commands
+
+- `bun typecheck` - Type check all packages (uses tsgo, turbo)
+- `bun dev` - Run CLI dev mode (`packages/opencode`)
+- `bun dev:web` - Run web app dev server (`packages/app`)
+- `bun dev:desktop` - Run desktop app dev mode (`packages/desktop`)
+- `bun turbo build` - Build all packages
+
+## Test Commands
+
+**IMPORTANT: Tests cannot run from repo root.**
+
+- `cd packages/opencode && bun test` - Run opencode tests
+- `cd packages/opencode && bun test --timeout 30000` - Run with timeout
+- `cd packages/opencode && bun test src/path/to/file.test.ts` - Run single test file
+- `cd packages/app && bun test:unit` - Run app unit tests
+- `cd packages/app && bun test:unit:watch` - Run app unit tests in watch mode
+- `cd packages/app && bun test:e2e` - Run Playwright E2E tests
+- `cd packages/app && bun test:e2e:ui` - Run E2E tests with UI
+
+## Lint/Format
+
+- `bun prettier --write .` - Format all files
+- Prettier config: `{ "semi": false, "printWidth": 120 }`
+
 ## Style Guide
 
 ### General Principles
@@ -85,6 +110,24 @@ function foo() {
   else return 2
 }
 ```
+
+### Imports
+
+- Use absolute imports for cross-package dependencies via workspace aliases
+- Within a package, use relative imports
+- Import type-only imports with `import type { ... }` when possible
+
+### Types
+
+- Avoid explicit type annotations when type inference works
+- Use `satisfies` instead of `as` for type assertions when possible
+- Prefer interfaces over type aliases for object shapes
+
+### Error Handling
+
+- Prefer throwing errors over returning error values
+- Use descriptive error messages
+- Avoid try/catch unless absolutely necessary
 
 ### Schema Definitions (Drizzle)
 
